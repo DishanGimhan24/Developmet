@@ -5,7 +5,7 @@ import {addCourse, deleteCourse, editCourse, getAllCourse, getCourseById} from "
 
 const router = express.Router();
 
-router.post('/add',addCourse);
+router.post('/addCourse',addCourse);
 router.get('/all',getAllCourse);
 router.delete('/delete/:id',deleteCourse);
 router.put('/edit/:id',editCourse);

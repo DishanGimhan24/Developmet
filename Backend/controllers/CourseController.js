@@ -1,15 +1,16 @@
 import Course from "../models/Course.js";
 
+
 // Add a new Course
 export const addCourse = async (req, res) => {
-  const Course = new Course(req.body);
+  const course = new Course(req.body);
   try {
-    if (Course) {
-      await Course.save();
+    if (course) {
+      await course.save();
       return res.status(200).json({
         success: true,
         message: "Course added successfully",
-        data: Course,
+        data: course,
       });
     } else {
       return res.status(400).json({
@@ -20,7 +21,8 @@ export const addCourse = async (req, res) => {
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: `Error saving Course: ${err.message}`,
+      message: "Server error",
+      error: err.message,
     });
   }
 };

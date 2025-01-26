@@ -1,85 +1,109 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./sidebar.css";
-import Sidebar from "./sidebar";
-const AdminPage = () => {
-  const [course, setCourses] = useState();
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-  /*     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:5000/api/admin/courses/addCourse', course);
-            console.log('Course created', response.data);
-            alert('Course created successfully');
-        } catch (err) {
-            console.error('Error creating course', err);
-        }
-    }; */
+const AdminPage = () => {
+  const [courses, setCourses] = useState([]);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/admin/courses/all"
-        );
-        setCourses(response.data.data); // Set the courses in state
+        const response = await axios.get("http://localhost:5000/api/admin/courses/all");
+        setCourses(response.data.data); // Assuming `data` contains the courses
       } catch (err) {
         setError("Error fetching courses");
         console.error(err);
       }
     };
 
-    fetchCourses(); // Fetch courses on component mount
+    fetchCourses();
   }, []);
 
+  const handleEdit = (id) => {
+    navigate(`/course/edit/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/admin/courses/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setCourses((prevCourses) => prevCourses.filter(course => course._id !== id));
+    } catch (err) {
+      setError('Error deleting course');
+      console.error(err);
+    }
+  };
+
+  const handleAddCourse = () => {
+    navigate('/course/add');
+  };
 
   return (
-
     <div className="container">
-    <Sidebar/>
-   {/* Add the Sidebar component */}
-   <div className="main-content">
-     <div className="height-100 bg-light">
-     
-       <div className="table-responsive">
-         <table className="table">
-           <thead>
-             <tr>
-               <th>Course ID</th>
-               <th>Course Name</th>
-               <th>Course Description</th>
-               <th>Course Duration</th>
-               <th>Course Fee</th>
-                <th>Action</th>
-               
-             </tr>
-           </thead>
-           <tbody>
-           {course &&
-                  course.map((course) => (
+      <Sidebar />
+      <div className="main-content">
+        <div className="height-100 bg-light">
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h2>Course List</h2>
+            <button onClick={handleAddCourse} className="btn btn-success">
+              Add Course
+            </button>
+          </div>
+          <div className="table-responsive">
+            <table className="table">
+              <thead className="thead-light">
+                <tr>
+                  <th>Course ID</th>
+                  <th>Course Name</th>
+                  <th>Course Description</th>
+                  <th>Course Duration</th>
+                  <th>Course Fee</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courses &&
+                  courses.map((course) => (
                     <tr key={course._id}>
                       <td>{course._id}</td>
                       <td>{course.title}</td>
+                      <td>{course.description}</td>
+                      <td>{course.duration}</td>
+                      <td>{course.fee}</td>
                       <td>
-                        {course.description}
-                        <small className="d-block">{course.description}</small>
-                      </td>
-                      <td> {course.duration}</td>
-                      <td> {course.fee}</td>
-                      <td>
-                       
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button
+                          onClick={() => handleEdit(course._id)}
+                          className="btn btn-warning btn-sm mr-2"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(course._id)}
+                          className="btn btn-danger btn-sm"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
-           </tbody>
-         </table>
-       </div>
-     </div>
-   </div>
- </div>
-    
+              </tbody>
+            </table>
+            {error && (
+              <div className="alert alert-danger mt-3" role="alert">
+                {error}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

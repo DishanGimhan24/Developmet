@@ -47,8 +47,8 @@ export const getAllCourse = async (req, res) => {
 //delete Course by id
 export const deleteCourse = async (req, res) => {
   try {
-    const Course = await Course.findByIdAndDelete(req.params.id);
-    if (!Course) {
+    const course = await Course.findByIdAndDelete(req.params.id);
+    if (!course) {
       return res.status(200).json({
         success: false,
         message: "Course not found",
@@ -57,7 +57,7 @@ export const deleteCourse = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Course deleted successfully",
-      data: Course,
+      data: course,
     });
   } catch (err) {
     return res.status(500).json({
@@ -71,8 +71,8 @@ export const deleteCourse = async (req, res) => {
 export const editCourse = async (req, res) => {
   try {
     // Update the Course using the provided ID and new data
-    const Course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true }); // { new: true } returns the updated document
-    if (!Course) {
+    const course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true }); // { new: true } returns the updated document
+    if (!course) {
       return res.status(200).json({
         success: false,
         message: "Course not found",
@@ -81,7 +81,7 @@ export const editCourse = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Course updated successfully",
-      data: Course, // Send back the updated Course
+      data: course, // Send back the updated Course
     });
   } catch (err) {
     return res.status(500).json({
@@ -94,8 +94,8 @@ export const editCourse = async (req, res) => {
 //get Course by id
 export const getCourseById = async (req, res) => {
   try {
-    const Course = await Course.findById(req.params.id);
-    if (!Course) {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
       return res.status(200).json({
         success: false,
         message: "Course not found",
@@ -104,7 +104,7 @@ export const getCourseById = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Course fetched successfully",
-      data: Course,
+      data: course,
     });
   } catch (err) {
     return res.status(500).json({

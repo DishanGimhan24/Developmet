@@ -8,17 +8,42 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Student from "./components/Student";
 import StudentForm from "./components/StudentForm";
 import Register from "./components/Register";
+import CourseForm from "./components/CourseForm";
+import StudentEditForm from "./components/StudentEditForm";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/student/:id" element={ <ProtectedRoute role="student"><StudentPage /></ProtectedRoute>}/>
-        <Route path="/admin"element={ <ProtectedRoute role="admin"><AdminPage /></ProtectedRoute>}/>
-        <Route path="/studentinfo" element={<StudentForm/>} />
+        <Route
+          path="/student/:id"
+          element={
+            <ProtectedRoute role="student">
+              <StudentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/studentinfo"
+          element={
+            <ProtectedRoute role="admin">
+              <StudentForm />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/course/edit/:id" element={<CourseForm />} />
+        <Route path="/course/add" element={<CourseForm />} />
+        <Route path="/studentinfo/edit/:id" element={<StudentEditForm />} />
       </Routes>
     </Router>
   );

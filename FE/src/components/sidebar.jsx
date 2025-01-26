@@ -61,7 +61,7 @@ const Sidebar = () => {
               <span className="nav_logo-name">Learning System</span>
             </a>
             <div className="nav_list">
-              <a href="/admin" className="nav_link active">
+              <a href="/admin" className="nav_link">
                 <i className="bx bx-grid-alt nav_icon"></i>
                 <span className="nav_name">Admin</span>
               </a>

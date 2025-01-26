@@ -1,9 +1,7 @@
 import React, { useEffect , useState} from 'react';
-import { useParams } from 'react-router-dom';
 import './sidebar.css';
 
 const Sidebar = () => {
-  const { id } = useParams();
   useEffect(() => {
 
 
@@ -47,14 +45,14 @@ const Sidebar = () => {
 
   return (
     <div id="body-pd">
-     {/*  <header className="header" id="header">
+      <header className="header" id="header">
         <div className="header_toggle">
           <i className="bx bx-menu" id="header-toggle"></i>
         </div>
         <div className="header_img">
           <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
         </div>
-      </header> */}
+      </header>
       <div className="l-navbar" id="nav-bar">
         <nav className="nav">
           <div>
@@ -95,7 +93,8 @@ const Sidebar = () => {
           </a>
         </nav>
       </div>
-    
+      <br></br>
+      <br></br><br></br> <br></br> <br></br>
     </div>
   );
 };

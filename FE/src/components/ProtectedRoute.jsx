@@ -9,11 +9,11 @@ const ProtectedRoute = ({ children, role }) => {
   localStorage.getItem('token');
   if (!isAuthenticated()) {
     console.log("User is not authenticated");
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   if (role && user.role !== role) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   return children;

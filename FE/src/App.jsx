@@ -7,6 +7,7 @@ import AdminPage from "./components/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Student from "./components/Student";
 import StudentForm from "./components/StudentForm";
+import Register from "./components/Register";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/student/:id" element={ <ProtectedRoute role="student"><StudentPage /></ProtectedRoute>}/>
         <Route path="/admin"element={ <ProtectedRoute role="admin"><AdminPage /></ProtectedRoute>}/>
         <Route path="/studentinfo" element={<StudentForm/>} />
+        <Route path="/register" element={<Register />} />
 
       </Routes>
     </Router>

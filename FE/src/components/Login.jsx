@@ -36,7 +36,7 @@ const Login = () => {
             console.log('Admin');
         navigate('/admin'); 
       } else if (userRole === 'student') {
-        console.log('Student');
+        
         navigate(`/student/${userId}`);  
       }
     } catch (err) {
@@ -109,7 +109,7 @@ const Login = () => {
                 </div>
               </div>
               <p className="small fw-bold mt-2 pt-1 mb-0">
-                Don't have an account? <a href="/" className="link-danger">Register</a>
+              Register as a Student <a href="/register" className="link-danger">Register</a>
               </p>
               <div>
                 <a href="#!" className="text-white me-4">

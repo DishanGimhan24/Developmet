@@ -15,14 +15,19 @@ cd your-repo-name
 
 Install backend dependencies:
 
-cd BACKEND
 npm install
+
+cd BACKEND
+
 
 npm run dev
 
 
-cd ../FE
 npm install
+
+
+cd ../FE
+
 
 npm run dev
 

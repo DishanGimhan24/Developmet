@@ -9,6 +9,8 @@ const app = express();
 import CourseRoute from "./routes/Course.js"
 import authRoutes from "./routes/authRoutes.js";
 import user from "./routes/user.js";
+import Student from "./models/Student.js";
+import adminRouter from "./routes/admin.js";
 
 
 
@@ -33,10 +35,15 @@ mongoose
   .catch((err) => console.log("MongoDB connection error: ", err));
 
 // Routes
-app.use("/api/course", CourseRoute);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/user", user);
 
+/* app.use("/api/course", CourseRoute);
+app.use("/api/student", Student);
+app.use("/api/enrollment",); */
+
+app.use("/api/admin",adminRouter);
 
 
 

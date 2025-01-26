@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./sidebar.css";
-const AdminPage = () => {
-  const [course, setCourses] = useState();
+const Student = () => {
+  const [students, setStudent] = useState();
 
   /*     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/admin/courses/addCourse', course);
-            console.log('Course created', response.data);
-            alert('Course created successfully');
+            const response = await axios.post('http://localhost:5000/api/admin/Student/addstudent', student);
+            console.log('student created', response.data);
+            alert('student created successfully');
         } catch (err) {
-            console.error('Error creating course', err);
+            console.error('Error creating student', err);
         }
     }; */
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/courses/all"
+          "http://localhost:5000/api/admin/students/all"
         );
-        setCourses(response.data.data); // Set the courses in state
+        setStudent(response.data.data); // Set the Student in state
       } catch (err) {
-        setError("Error fetching courses");
+        setError("Error fetching Student");
         console.error(err);
       }
     };
 
-    fetchCourses(); // Fetch courses on component mount
+    fetchStudent(); // Fetch Student on component mount
   }, []);
 
   document.addEventListener("DOMContentLoaded", function (event) {
@@ -140,8 +140,8 @@ const AdminPage = () => {
                 <label>Title</label>
                 <input
                     type="text"
-                    value={course.title}
-                    onChange={(e) => setCourse({ ...course, title: e.target.value })}
+                    value={student.title}
+                    onChange={(e) => setstudent({ ...student, title: e.target.value })}
                     required
                 />
             </div>
@@ -149,16 +149,16 @@ const AdminPage = () => {
                 <label>Description</label>
                 <input
                     type="text"
-                    value={course.description}
-                    onChange={(e) => setCourse({ ...course, description: e.target.value })}
+                    value={student.description}
+                    onChange={(e) => setstudent({ ...student, description: e.target.value })}
                     required
                 />
             </div>
             <div>
                 <label>Duration</label>
                 <select
-                    value={course.duration}
-                    onChange={(e) => setCourse({ ...course, duration: parseInt(e.target.value) })}
+                    value={student.duration}
+                    onChange={(e) => setstudent({ ...student, duration: parseInt(e.target.value) })}
                     required
                 >
                     <option value={1}>1 Month</option>
@@ -172,12 +172,12 @@ const AdminPage = () => {
     
                 <input
                     type="number"
-                    value={course.fee}
-                    onChange={(e) => setCourse({ ...course, fee: parseInt(e.target.value) })}
+                    value={student.fee}
+                    onChange={(e) => setstudent({ ...student, fee: parseInt(e.target.value) })}
                     required
                 />
             </div>
-            <button type="submit">Create Course</button>
+            <button type="submit">Create student</button>
         </form> */}
       <div class="content">
         <div class="container">
@@ -193,34 +193,34 @@ const AdminPage = () => {
                       <div class="control__indicator"></div>
                     </label>
                   </th>
-                  <th scope="col">Course ID</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Duration</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">student ID</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">E mail</th>
+                  <th scope="col">Date Of Birth</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Course</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {course &&
-                  course.map((course) => (
-                    <tr key={course._id}>
+                {students &&
+                  students.map((student) => (
+                    <tr key={student._id}>
                       <th scope="row">
                         <label className="control control--checkbox">
                           <input type="checkbox" />
                           <div className="control__indicator"></div>
                         </label>
                       </th>
-                      <td>{course._id}</td>
-                      <td>{course.title}</td>
-                      <td>
-                        {course.description}
-                        <small className="d-block">{course.description}</small>
-                      </td>
-                      <td> {course.duration}</td>
-                      <td> {course.fee}</td>
-                      <td>
-                        {/* Actions like Edit, Delete can go here */}
+                      <td>{student._id}</td>
+                      <td>{student.firstName}</td>
+                      <td>{student.lastName}</td>
+                      <td>{student.email}</td>
+                      <td>{student.dateOfBirth}</td>
+                      <td>{student.gender}</td>
+                      <td>{student.course}</td>
+                      <td scope="row">
                         <button>Edit</button>
                         <button>Delete</button>
                       </td>
@@ -235,4 +235,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default Student;

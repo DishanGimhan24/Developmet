@@ -24,21 +24,25 @@ const Login = () => {
       const { token } = response.data;
       // Store the token in localStorage (or sessionStorage)
       localStorage.setItem('token', token);
+
       console.log('Token:', token);
 
       // Decode the JWT to extract the user's role (you can use jwt-decode library if necessary)
       const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode the token (base64)
       const userRole = decodedToken.role;  // Extract the role (admin or student)
+      const userId = decodedToken.id;
+
+      console.log('User ID:', userId);
 
       console.log('User role:', userRole);
       // Navigate to the appropriate page based on the user's role
       if (userRole === 'admin')
          {
             console.log('Admin');
-        navigate('/admin');  // Navigate to the admin page
+        navigate(`/admin/${userId}`);  // Navigate to the admin page
       } else if (userRole === 'student') {
         console.log('Student');
-        navigate('/student');  // Navigate to the student page
+        navigate(`/student/${userId}`);  // Navigate to the student page
       }
     } catch (err) {
       setError('Invalid credentials');  // Set error message if login fails

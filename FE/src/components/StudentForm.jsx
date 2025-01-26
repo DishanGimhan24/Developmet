@@ -1,66 +1,166 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Sidebar from './sidebar';
 
 
 const StudentForm = ({ onSuccess }) => {
-    const [form, setForm] = useState({
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    dateOfBirth: "",
+    gender: "Male",
+    course: "",
+  });
+  const [students, setStudents] = useState([]);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:5000/api/addstudent", form);
+      console.log("Student created:", response.data);
+      setForm({
         firstName: "",
         lastName: "",
         email: "",
         dateOfBirth: "",
         gender: "Male",
         course: "",
-    });
+      });
+      setError("");
+      onSuccess(); // Callback to refresh the list
+      fetchStudents(); // Refresh the student list after adding a new student
+    } catch (err) {
+      setError(err.response?.data?.error || "An error occurred");
+    }
+  };
 
-    const [error, setError] = useState("");
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/admin/students/all");
+      console.log("Students fetched:", response.data);
+      setStudents(response.data.data); // Assuming `data` contains the students
+    } catch (err) {
+      console.error("Error fetching students:", err);
+    }
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
-    };
+  useEffect(() => {
+    fetchStudents();
+  }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:5000/api/addstudent", form);
-
-            const { token } = response.data;
-            console.log("Student created:", response.data);
-            setForm({
-                firstName: "",
-                lastName: "",
-                email: "",
-                dateOfBirth: "",
-                gender: "Male",
-                course: "",
-            });
-            setError("");
-            onSuccess(); // Callback to refresh the list
-        } catch (err) {
-            setError(err.response?.data?.error || "An error occurred");
-        }
-    };
-
-    return (
-        <body id="body-pd">
-        <header class="header" id="header">
-            <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-            <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt="" /> </div>
-        </header>
-        <div class="l-navbar" id="nav-bar">
-            <nav class="nav">
-                <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">BBBootstrap</span> </a>
-                    <div class="nav_list"> <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Dashboard</span> </a> <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Users</span> </a> <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Messages</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Bookmark</span> </a> <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Files</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a> </div>
-                </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
-            </nav>
+  return (
+    <div className="container">
+       <Sidebar/>
+      {/* Add the Sidebar component */}
+      <div className="main-content">
+        <div className="height-100 bg-light">
+          {/* <form onSubmit={handleSubmit}>
+            <div>
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                value={form.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={form.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Date of Birth</label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={form.dateOfBirth}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Gender</label>
+              <select
+                name="gender"
+                value={form.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div>
+              <label>Course</label>
+              <input
+                type="text"
+                name="course"
+                value={form.course}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <button type="submit">Add Student</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </form> */}
+          <div className="table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Date of Birth</th>
+                  <th>Gender</th>
+                  <th>Course</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((student) => (
+                  <tr key={student.id}>
+                    <td>{student.firstName}</td>
+                    <td>{student.lastName}</td>
+                    <td>{student.email}</td>
+                    <td>{student.dateOfBirth}</td>
+                    <td>{student.gender}</td>
+                    <td>{student.course}</td>
+                    <td>
+                      {/* Add any actions here */}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-       {/*  <!--Container Main start--> */}
-        <div class="height-100 bg-light">
-            <h4>Main Components</h4>
-        </div>
-       {/*  <!--Container Main end--> */}
-        </body>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default StudentForm;

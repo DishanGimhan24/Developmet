@@ -9,6 +9,7 @@ import StudentForm from "./components/StudentForm";
 import Register from "./components/Register";
 import CourseForm from "./components/CourseForm";
 import StudentEditForm from "./components/StudentEditForm";
+import EnrollmentsPage from "./components/EnrollmentsPage";
 
 const App = () => {
   return (
@@ -44,6 +45,8 @@ const App = () => {
         <Route path="/course/add" element={<CourseForm />} />
         <Route path="/studentinfo/edit/:id" element={<StudentEditForm />} />
         <Route path="/studentinfo/add" element={<StudentEditForm />} />
+        <Route path="/enrolles" element={<EnrollmentsPage/>} />
+     
 
       </Routes>
     </Router>

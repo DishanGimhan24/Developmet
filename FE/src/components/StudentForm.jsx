@@ -59,7 +59,7 @@ const StudentForm = ({ onSuccess }) => {
   
         <h2>Student List</h2>
         <button onClick={handleAddStudent} className="btn btn-success">
-              Add Course
+              Add Student
             </button>
         <div className="table-responsive">
           <table className="table">

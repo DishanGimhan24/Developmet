@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,6 +20,8 @@ const Register = () => {
       });
       const data = await response.json();
       setMessage(data.message);
+      
+        navigate("/");
     } catch (error) {
       setMessage("Registration failed.");
     }

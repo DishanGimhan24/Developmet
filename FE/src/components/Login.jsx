@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';  // Use the useHistory hook for 
 import axios from 'axios';
 import './Css/Login.css'
 
-const Login = () => {
+ export  const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -43,6 +43,8 @@ const Login = () => {
       setError('Invalid credentials');
     }
   };
+
+
 
   return (
     <section className="vh-100">
@@ -129,11 +131,8 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        <div className="text-white mb-3 mb-md-0">
-          Copyright © 2024. All rights reserved.
-        </div>
-      </div>
+      
+   
     </section>
   );
 };

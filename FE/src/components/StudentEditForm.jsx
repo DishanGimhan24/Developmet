@@ -8,7 +8,7 @@ const StudentEditForm = () => {
     lastName: '',
     email: '',
     dateOfBirth: '',
-    gender: '',
+    gender: 'Male',
     course: ''
   });
   const [message, setMessage] = useState('');
@@ -60,7 +60,7 @@ console.log(formData);
         });
         setMessage('Student updated successfully.');
       } else {
-        await axios.post('http://localhost:5000/api/admin/students/add', formData, {
+        await axios.post('http://localhost:5000/api/admin/students/addstudent', formData, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,

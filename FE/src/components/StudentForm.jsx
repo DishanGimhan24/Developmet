@@ -38,6 +38,9 @@ const StudentForm = ({ onSuccess }) => {
     Navigate(`/studentinfo/edit/${id}`);
 
   };
+  const handleAddStudent = () => {
+    Navigate('/studentinfo/add');
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -55,6 +58,9 @@ const StudentForm = ({ onSuccess }) => {
       <div className="main-content">
   
         <h2>Student List</h2>
+        <button onClick={handleAddStudent} className="btn btn-success">
+              Add Course
+            </button>
         <div className="table-responsive">
           <table className="table">
             <thead>

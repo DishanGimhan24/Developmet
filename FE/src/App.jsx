@@ -5,7 +5,6 @@ import Login from "./components/Login";
 import StudentPage from "./components/StudentPage";
 import AdminPage from "./components/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Student from "./components/Student";
 import StudentForm from "./components/StudentForm";
 import Register from "./components/Register";
 import CourseForm from "./components/CourseForm";
@@ -44,6 +43,8 @@ const App = () => {
         <Route path="/course/edit/:id" element={<CourseForm />} />
         <Route path="/course/add" element={<CourseForm />} />
         <Route path="/studentinfo/edit/:id" element={<StudentEditForm />} />
+        <Route path="/studentinfo/add" element={<StudentEditForm />} />
+
       </Routes>
     </Router>
   );

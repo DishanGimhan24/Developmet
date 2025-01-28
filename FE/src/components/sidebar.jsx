@@ -47,7 +47,7 @@ const Sidebar = () => {
               <i className="bx bx-bar-chart-alt-2 nav_icon"></i>
               <span className="nav_name">Stats</span>
             </a>
-            <a href="#" className="nav_link" onClick={handleLogout}>
+            <a href="" className="nav_link" onClick={handleLogout}>
               <i className="bx bx-log-out nav_icon"></i>
               <span className="nav_name">SignOut</span>
             </a>

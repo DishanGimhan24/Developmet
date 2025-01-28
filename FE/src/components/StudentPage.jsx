@@ -3,11 +3,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Css/StudentPage.css"
+import { useNavigate } from "react-router-dom";
 
 const StudentPage = ({ userId }) => {
   const [courses, setCourses] = useState([]);
   const [message, setMessage] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   // Fetch all courses
   useEffect(() => {
@@ -42,6 +44,13 @@ const StudentPage = ({ userId }) => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userId');
+    navigate('/');
+  };;
+
   return (
 
       <div className="row-cols-auto">
@@ -50,6 +59,9 @@ const StudentPage = ({ userId }) => {
             <div className="card-body text-center">
               <h5 className="card-title m-b-0">Available Courses</h5>
             </div>
+            <button onClick={handleLogout} className="btn btn-danger">
+          Logout
+        </button>
             <div className="table-responsive">
               {message && (
                 <div className={`alert ${message.includes('Successfully') ? 'alert-success' : 'alert-danger'}`} role="alert">

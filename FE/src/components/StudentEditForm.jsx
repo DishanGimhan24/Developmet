@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
 const StudentEditForm = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    dateOfBirth: '',
-    gender: 'Male',
-    course: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    dateOfBirth: "",
+    gender: "Male",
+    course: "",
   });
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -19,20 +20,20 @@ const StudentEditForm = () => {
     if (id) {
       const fetchStudent = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/api/admin/students/get/${id}`);
+          const response = await axios.get(
+            `http://localhost:5000/api/admin/students/get/${id}`
+          );
           setFormData({
             firstName: response.data.data.firstName,
             lastName: response.data.data.lastName,
             email: response.data.data.email,
-            dateOfBirth: response.data.data.dateOfBirth.split('T')[0],
+            dateOfBirth: response.data.data.dateOfBirth.split("T")[0],
             gender: response.data.data.gender,
-            course: response.data.data.course
-
-            
+            course: response.data.data.course,
           });
           console.log(response.data);
         } catch (error) {
-          setMessage('Error fetching student data.');
+          setMessage("Error fetching student data.");
         }
       };
 
@@ -44,51 +45,70 @@ const StudentEditForm = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
-console.log(formData);
+  console.log(formData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (id) {
-        await axios.put(`http://localhost:5000/api/admin/students/edit/${id}`, formData, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-        setMessage('Student updated successfully.');
+        await axios.put(
+          `http://localhost:5000/api/admin/students/edit/${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setMessage("Student updated successfully.");
       } else {
-        await axios.post('http://localhost:5000/api/admin/students/addstudent', formData, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-        setMessage('Student added successfully.');
-        ;
+        const response = await axios.post(
+          "http://localhost:5000/api/admin/students/addstudent",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+          
+        );
+           console.log("response", response);
+
+        setMessage("Student added successfully.");
       }
       setTimeout(() => {
-        navigate('/studentinfo');
-    }, 2000);   
-  
+        navigate("/studentinfo");
+      }, 2000);
+   
     } catch (error) {
-      setMessage('Error submitting form.');
+      setMessage(`${error.response.data.message}`);
+     
     }
   };
+
 
   return (
     <div className="container-fluid px-1 py-5 mx-auto">
       <div className="row d-flex justify-content-center">
         <h3>Hello there !!!</h3>
-        <p className="blue-text">Fill in all details<br /></p>
+        <p className="blue-text">
+          Fill in all details
+          <br />
+        </p>
         <div className="card">
-          <h5 className="text-center mb-4">{id ? 'Update Student' : 'Add New Student'}</h5>
+          <h5 className="text-center mb-4">
+            {id ? "Update Student" : "Add New Student"}
+          </h5>
           <form className="form-card" onSubmit={handleSubmit}>
             <div className="row justify-content-between text-left">
               <div className="form-group col-sm-6 flex-column d-flex">
-                <label className="form-control-label px-3">First Name<span className="text-danger"> *</span></label>
+                <label className="form-control-label px-3">
+                  First Name<span className="text-danger"> *</span>
+                </label>
                 <input
                   type="text"
                   id="firstName"
@@ -100,7 +120,9 @@ console.log(formData);
                 />
               </div>
               <div className="form-group col-sm-6 flex-column d-flex">
-                <label className="form-control-label px-3">Last Name<span className="text-danger"> *</span></label>
+                <label className="form-control-label px-3">
+                  Last Name<span className="text-danger"> *</span>
+                </label>
                 <input
                   type="text"
                   id="lastName"
@@ -114,7 +136,9 @@ console.log(formData);
             </div>
             <div className="row justify-content-between text-left">
               <div className="form-group col-sm-6 flex-column d-flex">
-                <label className="form-control-label px-3">Email<span className="text-danger"> *</span></label>
+                <label className="form-control-label px-3">
+                  Email<span className="text-danger"> *</span>
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -126,7 +150,9 @@ console.log(formData);
                 />
               </div>
               <div className="form-group col-sm-6 flex-column d-flex">
-                <label className="form-control-label px-3">Date of Birth<span className="text-danger"> *</span></label>
+                <label className="form-control-label px-3">
+                  Date of Birth<span className="text-danger"> *</span>
+                </label>
                 <input
                   type="date"
                   id="dateOfBirth"
@@ -140,7 +166,9 @@ console.log(formData);
             </div>
             <div className="row justify-content-between text-left">
               <div className="form-group col-sm-6 flex-column d-flex">
-                <label className="form-control-label px-3">Gender<span className="text-danger"> *</span></label>
+                <label className="form-control-label px-3">
+                  Gender<span className="text-danger"> *</span>
+                </label>
                 <select
                   id="gender"
                   name="gender"
@@ -153,7 +181,9 @@ console.log(formData);
                 </select>
               </div>
               <div className="form-group col-sm-6 flex-column d-flex">
-                <label className="form-control-label px-3">Course<span className="text-danger"> *</span></label>
+                <label className="form-control-label px-3">
+                  Course<span className="text-danger"> *</span>
+                </label>
                 <input
                   type="text"
                   id="course"
@@ -167,11 +197,20 @@ console.log(formData);
             </div>
             <div className="row justify-content-end">
               <div className="form-group col-sm-6">
-                <button type="submit" className="btn-block btn-primary">{id ? 'Update Student' : 'Add Student'}</button>
+                <button type="submit" className="btn-block btn-primary">
+                  {id ? "Update Student" : "Add Student"}
+                </button>
               </div>
             </div>
             {message && (
-              <div className={`alert ${message.includes('successfully') ? 'alert-success' : 'alert-danger'} mt-3`} role="alert">
+              <div
+                className={`alert ${
+                  message.includes("successfully")
+                    ? "alert-success"
+                    : "alert-danger"
+                } mt-3`}
+                role="alert"
+              >
                 {message}
               </div>
             )}

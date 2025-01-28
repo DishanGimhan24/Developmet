@@ -22,12 +22,20 @@ export const addStudent = async (req, res) => {
       });
     }
   } catch (err) {
+    if (err.code === 11000) { // Duplicate key error
+      const field = Object.keys(err.keyValue)[0]; // Get the duplicate field
+      return res.status(400).json({
+        success: false,
+        message: `${field.charAt(0).toUpperCase() + field.slice(1)} is already in use.`,
+      });
+    }
     return res.status(500).json({
       success: false,
       message: `Error saving Student: ${err.message}`,
     });
   }
 };
+
 
 // Get all Students
 export const getAllStudent = async (req, res) => {

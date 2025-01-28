@@ -34,10 +34,6 @@ const StudentForm = ({ onSuccess }) => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
   const handleEdit = (id) => {
     Navigate(`/studentinfo/edit/${id}`);
 

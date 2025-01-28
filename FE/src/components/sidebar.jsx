@@ -93,8 +93,7 @@ const Sidebar = () => {
           </a>
         </nav>
       </div>
-      <br></br>
-      <br></br><br></br> <br></br> <br></br>
+
     </div>
   );
 };

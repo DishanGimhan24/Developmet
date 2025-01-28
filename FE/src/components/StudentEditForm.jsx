@@ -25,6 +25,9 @@ const StudentEditForm = () => {
             lastName: response.data.data.lastName,
             email: response.data.data.email,
             dateOfBirth: response.data.data.dateOfBirth.split('T')[0],
+            gender: response.data.data.gender,
+            course: response.data.data.course
+
             
           });
           console.log(response.data);

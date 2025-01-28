@@ -71,12 +71,31 @@ const EnrollmentsPage = () => {
     }
   };
 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCurrentEnrollment((prevEnrollment) => ({
       ...prevEnrollment,
       [name]: { _id: value },
     }));
+  };
+
+  const handleDelete = async (enrollmentId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/admin/enrollments/delete/${enrollmentId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      // Refresh enrollments
+      const response = await axios.get('http://localhost:5000/api/admin/enrollments/all');
+      setEnrollments(response.data.data);
+      setSuccessMessage('Enrollment deleted successfully.');
+      setTimeout(() => setSuccessMessage(''), 5000);
+    } catch (err) {
+      setError('Error deleting enrollment');
+    }
   };
 
   if (loading) return <p>Loading...</p>;
@@ -116,7 +135,15 @@ const EnrollmentsPage = () => {
                       >
                         Edit
                       </button>
+
+                      <button
+                        onClick={() => handleDelete(enrollment._id)}
+                        className="btn btn-danger btn-sm ml-2"
+                      >
+                        Delete
+                      </button>
                     </td>
+
                   </tr>
                 ))}
               </tbody>

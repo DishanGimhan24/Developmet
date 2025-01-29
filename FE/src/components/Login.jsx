@@ -126,6 +126,11 @@ import './Css/Login.css'
                 <a href="#!" className="text-white me-4">
                   <i className="bi bi-linkedin"></i>
                 </a>
+                <p className="small fw-bold mt-2 pt-1 mb-0">
+                Admin Credential <br/>
+                email:kdgimhan0@gmail.com 
+                password:password123@
+              </p>
               </div>
             </form>
           </div>
